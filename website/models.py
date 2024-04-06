@@ -5,9 +5,9 @@ from sqlalchemy.sql import func
 
 
 class Comenzi_reciclare(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     type_of_recycle = db.Column(db.String(100))
-    quantity_int_tone = db.Column(db.Integer)
+    quantity_int_tone = db.Column(db.Integer)   
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 

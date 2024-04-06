@@ -1,13 +1,13 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 <h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
+<ul class="list-group list-group-flush" id="comenzi_reciclare">
+  {% for comanda in user_comm_table %}
   <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <p>Type of Recycle: {{ comanda.type_of_recycle }}</p>
+    <p>Quantity (in tons): {{ comanda.quantity_int_tone }}</p>
+    text 
+    <!-- Optionally, add a delete button here -->
   </li>
   {% endfor %}
 </ul>
