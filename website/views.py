@@ -39,8 +39,18 @@ def delete_note():
 
 @views.route('/ceva', methods=['GET', 'POST'])
 def ceva():
+    if request.method == 'POST': 
+        message = request.form.get('message')#Gets the note from the HTML
+        name = request.form.get('name')
+        email = request.form.get('email')
+        print(message,name,email)
+
+    return render_template('buttnresponse.html')
+
+@views.route('/extend', methods=['GET', 'POST'])
+def extend():
     if request.method == 'POST':
         print(request.get_json())
 
-    return render_template('buttnresponse.html')
+    return render_template('extendtest.html')
 

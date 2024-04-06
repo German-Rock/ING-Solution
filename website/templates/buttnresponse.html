@@ -4,12 +4,25 @@
         <time>Ceva de la button</time>
     </head>
     <body>
-        <form id="myForm" method="POST" action="http://localhost:5000/ceva">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" required><br><br>
-            <button type="submit">Submit</button>
-          </form>
+        <div class="container">
+            <h1>FormSubmit Demo</h1>
+            <form target="_blank" action="http://localhost:5000/ceva" method="POST">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+                  </div>
+                  <div class="col">
+                    <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea placeholder="Your Message" class="form-control" name="message" rows="10" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-lg btn-dark btn-block">Submit Form</button>
+            </form>
+          </div>
+        
     </body>
 </html>
