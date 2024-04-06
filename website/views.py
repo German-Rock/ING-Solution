@@ -9,12 +9,6 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> refs/remotes/origin/main
 def home():
     if request.method == 'POST': 
         recycle = request.form.get('type_of_recycle')
