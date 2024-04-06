@@ -44,14 +44,8 @@ def ceva():
         message = request.form.get('message')#Gets the note from the HTML
         name = request.form.get('name')
         email = request.form.get('email')
+        request.
         print(message,name,email)
 
     return render_template('buttnresponse.html')
-
-@views.route('/extend', methods=['GET', 'POST'])
-def extend():
-    if request.method == 'POST':
-        print(request.get_json())
-
-    return render_template('extendtest.html')
 
