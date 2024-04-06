@@ -1,14 +1,34 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy.orm import validates
 
 
 
 class Comenzi_reciclare(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    type_of_recycle = db.Column(db.String(100))
+    _type_of_recycle = db.Column(db.String(100))
     quantity_int_tone = db.Column(db.Integer)   
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    data = db.Column(db.DateTime(timezone=True), default=func.now())
+    check_if_done = db.Column(db.Boolean, default=False)
+
+    @property
+    def type_of_recycle(self):
+        return self._type_of_recycle
+
+    @type_of_recycle.setter
+    def type_of_recycle(self, value):
+        valid_types = {"plastic", "hartie/carton", "sticla", "organic", "electronic"}
+        if value.lower() not in valid_types:
+            raise ValueError(f"Invalid type_of_recycle: {value}. Allowed values are: {', '.join(valid_types)}")
+        self._type_of_recycle = value.lower()
+
+    @validates('quantity_int_tone')
+    def validate_quantity_int_tone(self, key, quantity_int_tone):
+        if quantity_int_tone < 0:
+            raise ValueError("Quantity (in tons) must be a positive number")
+        return quantity_int_tone
 
 
 class User(db.Model, UserMixin):
@@ -21,6 +41,13 @@ class User(db.Model, UserMixin):
     strada = db.Column(db.String(30))
     bloc = db.Column(db.String(5))
     notes = db.relationship('Comenzi_reciclare')
+    
+class Colector(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+    company_name = db.Column(db.String(150))
+    localitate = db.Column(db.String(30))
     
     
 # # Definirea tabelei de asociere (tabelul intermediar)

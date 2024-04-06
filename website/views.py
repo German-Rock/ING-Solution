@@ -9,6 +9,12 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> refs/remotes/origin/main
 def home():
     if request.method == 'POST': 
         recycle = request.form.get('type_of_recycle')
@@ -17,12 +23,16 @@ def home():
         if len(recycle) < 1:
             flash('Type of recycle is too short!', category='error') 
         else:
-            new_comanda = Comenzi_reciclare(type_of_recycle=recycle, quantity_int_tone=quantity, user_id=current_user.id)
-            db.session.add(new_comanda)
-            db.session.commit()
-            flash('Comanda a fost adaugata!', category='success')
+            try:
+                new_comanda = Comenzi_reciclare(type_of_recycle=recycle, quantity_int_tone=int(quantity), user_id=current_user.id)
+                db.session.add(new_comanda)
+                db.session.commit()
+                flash('Comanda a fost adaugata!', category='success')
+            except ValueError as e:
+                flash(str(e), category='error')
 
-    return render_template("home.html", user_comm_table=Comenzi_reciclare.query.filter_by(user_id=current_user.id), user=current_user)
+    user_comm_table = Comenzi_reciclare.query.filter_by(user_id=current_user.id).all()
+    return render_template("home.html", user_comm_table=user_comm_table, user=current_user)
 
 
 # @views.route('/delete-note', methods=['POST'])
