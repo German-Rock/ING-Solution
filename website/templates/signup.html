@@ -3,12 +3,23 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<form method="POST">
-  <h3 align="center">Sign Up</h3>
-  <br />
-  <div class="button-group">
-    <button type="submit" name="role" value="Collector" class="btn btn-primary">Sign up as Collector</button>
-    <button type="submit" name="role" value="User" class="btn btn-secondary">Sign up as User</button>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Sign Up</h3>
+          <form method="POST" class="text-center">
+            <div class="mb-3">
+              <button type="submit" name="role" value="Collector" class="btn btn-primary btn-lg btn-block">Sign up as Collector</button>
+            </div>
+            <div class="mb-3">
+              <button type="submit" name="role" value="User" class="btn btn-secondary btn-lg btn-block">Sign up as User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-</form>
+</div>
 {% endblock %}
