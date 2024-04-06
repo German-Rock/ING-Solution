@@ -8,14 +8,13 @@ class Locatie(db.Model):
     strada = db.Column(db.String(30))
     bloc = db.Column(db.String(2))
     
- # Definirea tabelei de asociere (tabelul intermediar)
-comenzi_reciclare = db.Table('comenzi_reciclare',
+# Definirea tabelei de asociere (tabelul intermediar)
+comenzi_reciclare = db.Table(
+    'comenzi_reciclare',
     db.Column('tip_deseu_id', db.Integer, db.ForeignKey('tip_deseu.id'), primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    # Definirea relației many-to-many cu User prin intermediul tabelei de asociere
-    users = db.relationship('User', secondary=comenzi_reciclare, backref=db.backref('tip_deseuri', lazy='dynamic'))
-)   
-    
+)
+
 class Tip_Deseu(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cantitate = db.Column(db.Integer)
