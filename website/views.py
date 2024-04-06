@@ -9,8 +9,6 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
-
-
 def home():
     if request.method == 'POST': 
         recycle = request.form.get('type_of_recycle')
@@ -46,7 +44,6 @@ def ceva():
         message = request.form.get('message')#Gets the note from the HTML
         name = request.form.get('name')
         email = request.form.get('email')
-        request.
         print(message,name,email)
 
     return render_template('buttnresponse.html')

@@ -35,8 +35,25 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@auth.route('/signup', methods=['GET', 'POST'])
 def sign_up():
+    if request.method == 'POST':
+        role = request.form.get('role')
+
+        if role == 'User':
+            # return render_template("signup-user.html", user=current_user)
+            return redirect(url_for("auth.sign_up_user"))
+        
+        if role == 'Collector':
+            # return render_template("signup-collector.html", user=current_user)
+            return redirect(url_for("auth.sign_up_coll"))
+
+
+    return render_template("signup.html", user=current_user)
+
+
+@auth.route('/signup-collector', methods=['GET', 'POST'])
+def sign_up_coll():
     if request.method == 'POST':
         email = request.form.get('email')
         first_name = request.form.get('firstName')
@@ -68,4 +85,76 @@ def sign_up():
             flash('Account created!', category='success')
             return redirect(url_for('views.home'))
 
-    return render_template("sign_up.html", user=current_user)
+    return render_template("signup-collector.html", user=current_user)
+
+
+@auth.route('/signup-user', methods=['GET', 'POST'])
+def sign_up_user():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        first_name = request.form.get('firstName')
+        localitate = request.form.get('localitate')
+        strada = request.form.get('strada')
+        bloc = request.form.get('bloc')
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        # elif len(first_name) < 2:
+        #     flash('First name must be greater than 1 character.', category='error')
+        elif password1 != password2:
+            flash('Passwords don\'t match.', category='error')
+        elif len(password1) < 7:
+            flash('Password must be at least 7 characters.', category='error')
+        else:
+            # new_user = User(email=email, first_name=first_name, password=generate_password_hash(
+            #     password1, method='sha256'))
+            new_user = User(email=email, first_name=first_name, password=generate_password_hash(
+                password1, method='pbkdf2'),user_type='user',localitate=localitate,strada=strada,bloc=bloc)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
+            flash('Account created!', category='success')
+            return redirect(url_for('views.home'))
+
+    return render_template("signup-user.html", user=current_user)
+
+
+# @auth.route('/sign-up', methods=['GET', 'POST'])
+# def sign_up():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         first_name = request.form.get('firstName')
+#         localitate = request.form.get('localitate')
+#         strada = request.form.get('strada')
+#         bloc = request.form.get('bloc')
+#         password1 = request.form.get('password1')
+#         password2 = request.form.get('password2')
+
+#         user = User.query.filter_by(email=email).first()
+#         if user:
+#             flash('Email already exists.', category='error')
+#         elif len(email) < 4:
+#             flash('Email must be greater than 3 characters.', category='error')
+#         # elif len(first_name) < 2:
+#         #     flash('First name must be greater than 1 character.', category='error')
+#         elif password1 != password2:
+#             flash('Passwords don\'t match.', category='error')
+#         elif len(password1) < 7:
+#             flash('Password must be at least 7 characters.', category='error')
+#         else:
+#             # new_user = User(email=email, first_name=first_name, password=generate_password_hash(
+#             #     password1, method='sha256'))
+#             new_user = User(email=email, first_name=first_name, password=generate_password_hash(
+#                 password1, method='pbkdf2'),user_type='user',localitate=localitate,strada=strada,bloc=bloc)
+#             db.session.add(new_user)
+#             db.session.commit()
+#             login_user(new_user, remember=True)
+#             flash('Account created!', category='success')
+#             return redirect(url_for('views.home'))
+
+#     return render_template("sign_up.html", user=current_user)
