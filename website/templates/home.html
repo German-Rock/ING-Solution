@@ -12,10 +12,14 @@
   {% endfor %}
 </ul>
 <form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
+  <label for="type_of_recycle">Type of Recycle:</label>
+  <input type="text" name="type_of_recycle" id="type_of_recycle" class="form-control" required>
+  <br>
+  <label for="quantity_int_tone">Quantity (in tons):</label>
+  <input type="number" name="quantity_int_tone" id="quantity_int_tone" class="form-control" required>
+  <br>
   <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
+    <button type="submit" class="btn btn-primary">Add Data</button>
   </div>
 </form>
 {% endblock %}
