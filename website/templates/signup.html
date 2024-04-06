@@ -1,15 +1,14 @@
-{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
-content %}
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
 <form method="POST">
   <h3 align="center">Sign Up</h3>
-  <div class="form-group">
-    <label for="role">Role</label>
-    <input
-      name="role"
-      placeholder="Enter role"
-    />
-  </div>
   <br />
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="button-group">
+    <button type="submit" name="role" value="Collector" class="btn btn-primary">Sign up as Collector</button>
+    <button type="submit" name="role" value="User" class="btn btn-secondary">Sign up as User</button>
+  </div>
 </form>
 {% endblock %}
