@@ -10,6 +10,8 @@ class Comenzi_reciclare(db.Model):
     _type_of_recycle = db.Column(db.String(100))
     quantity_int_tone = db.Column(db.Integer)   
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    data = db.Column(db.DateTime(timezone=True), default=func.now())
+    check_if_done = db.Column(db.Boolean, default=False)
 
     @property
     def type_of_recycle(self):
@@ -39,6 +41,13 @@ class User(db.Model, UserMixin):
     strada = db.Column(db.String(30))
     bloc = db.Column(db.String(5))
     notes = db.relationship('Comenzi_reciclare')
+    
+class Colector(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True)
+    password = db.Column(db.String(150))
+    company_name = db.Column(db.String(150))
+    localitate = db.Column(db.String(30))
     
     
 # # Definirea tabelei de asociere (tabelul intermediar)
