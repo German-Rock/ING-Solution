@@ -1,14 +1,32 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy.orm import validates
 
 
 
 class Comenzi_reciclare(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    type_of_recycle = db.Column(db.String(100))
+    _type_of_recycle = db.Column(db.String(100))
     quantity_int_tone = db.Column(db.Integer)   
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    @property
+    def type_of_recycle(self):
+        return self._type_of_recycle
+
+    @type_of_recycle.setter
+    def type_of_recycle(self, value):
+        valid_types = {"plastic", "hartie/carton", "sticla", "organic", "electronic"}
+        if value.lower() not in valid_types:
+            raise ValueError(f"Invalid type_of_recycle: {value}. Allowed values are: {', '.join(valid_types)}")
+        self._type_of_recycle = value.lower()
+
+    @validates('quantity_int_tone')
+    def validate_quantity_int_tone(self, key, quantity_int_tone):
+        if quantity_int_tone < 0:
+            raise ValueError("Quantity (in tons) must be a positive number")
+        return quantity_int_tone
 
 
 class User(db.Model, UserMixin):
