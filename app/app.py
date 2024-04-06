@@ -1,6 +1,6 @@
+from flask import Flask
 
-
-app = create_app()
+app = Flask("ceva aplicatie")
 
 if __name__ == '__main__':
     app.run(debug=True)
