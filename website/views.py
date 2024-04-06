@@ -35,3 +35,12 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
+
+
+@views.route('/ceva', methods=['GET', 'POST'])
+def ceva():
+    if request.method == 'POST':
+        print(request.get_json())
+
+    return render_template('buttnresponse.html')
+
